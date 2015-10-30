@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:weightSum="1">
+
+    <!-- Word entered for search-->
+    <TextView
+            android:id="@+id/welcome_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter a word:"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#ffd764"
+            android:padding="20dp"/>
+
+    <EditText
+            android:id="@+id/enter_word"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10">
+
+        <requestFocus/>
+    </EditText>
+
+    <!-- Submit button-->
+    <Button
+            android:id="@+id/submit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="submit word"/>
+
+    <!-- Text displayed-->
+    <TextView
+            android:id="@+id/result_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:layout_gravity="center_horizontal"/>
+
+</LinearLayout>
+
