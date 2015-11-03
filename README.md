@@ -2,6 +2,7 @@
 Repository-ul pentru proiectul #1 (Caruselul Literelor) de la Management-ul Proiectelor Software
 
 Echipa:
+
 Technical Writer
 * Dragomir Dragos, 341C5
 
