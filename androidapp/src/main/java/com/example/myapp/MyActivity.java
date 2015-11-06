@@ -163,9 +163,9 @@ public class MyActivity extends Activity {
     }
 
     //TODO: class for the letter that need to be displayed graphical
-    public class wordsView extends View {
+    public class WordsView extends View {
 
-        public wordsView(Context context) {
+        public WordsView(Context context) {
             super(context);
         }
 
