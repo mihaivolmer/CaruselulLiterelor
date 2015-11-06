@@ -8,7 +8,7 @@ Technical Writer
 
 Developers:
 * Ionel Laura, 342C5
-* Iulia Gruia, 341C5
+* Gruia Iulia, 341C5
 * Volmer Mihai, 341C1
 
 Testers
