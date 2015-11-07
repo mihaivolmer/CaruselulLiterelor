@@ -108,7 +108,7 @@ public class MyActivity extends Activity {
                     responseWords.add(responseWord);
                     Log.i("Word " + word, " is OK");
                     resultTextView.setText(outputMessage + OUTPUT_MESSAGE_OK);
-                    numberOfLeters = numberOfLeters + responseWord.length();
+                    numberOfLeters = numberOfLeters + calculateScore(responseWord);
                     score.setText(" Score: " + numberOfLeters);
                     wordExistsInList = false;
 
