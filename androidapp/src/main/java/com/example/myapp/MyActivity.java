@@ -2,25 +2,19 @@ package com.example.myapp;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
-import android.view.TextureView;
+import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import org.apache.http.HttpEntity;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.*;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -30,10 +24,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
-import android.os.CountDownTimer;
-import android.view.inputmethod.InputMethodManager;
-import org.w3c.dom.Text;
 
 public class MyActivity extends Activity {
 
@@ -201,7 +193,10 @@ public class MyActivity extends Activity {
 
         @Override
         public void onClick(View view) {
+
             setContentView(R.layout.httpget);
+            generateLetters();
+
             resultTextView = (TextView) findViewById(R.id.result_text);
             score = (TextView) findViewById(R.id.countPoints);
             timer = (TextView) findViewById(R.id.timer);
@@ -214,23 +209,66 @@ public class MyActivity extends Activity {
         }
     }
 
-    private class ButtonClickListenerResetButton implements Button.OnClickListener {
+    private void generateLetters() {
+
+        Generator letterGenerator = new Generator();
+
+        List<Character> letterList = letterGenerator.getLetters();
+
+        LinearLayout myLayout = (LinearLayout) findViewById(R.id.my_layout);
 
 
-        @Override
-        public void onClick(View view) {
-            setContentView(R.layout.httpget);
+        int listSize = letterList.size();
+        TextView[] pairs=new TextView[listSize];
 
-            score = (TextView) findViewById(R.id.countPoints);
-            timer = (TextView) findViewById(R.id.timer);
-            countDownTimer = new MalibuCountDownTimer(startTime, interval);
-            timer.setText(timer.getText() + String.valueOf(startTime));
-            initHttpGetFrame();
-            countDownTimer.start();
-            numberOfLeters = 0;
+        for(int l = 0; l < listSize; l++)
+        {
 
+
+            pairs[l] = new TextView(this);
+            pairs[l].setWidth(100);
+            pairs[l].setHeight(100);
+
+            //set coordinates
+
+//            if (l >= 1) {
+//                pairs[l].setX(pairs[l - 1].getX() + 50);
+//
+//                if (pairs[l].getX() > 300) {
+//                    pairs[l].setY(pairs[l - 1].getY() + 20);
+//                }
+//            } else {
+//                pairs[l].setX(100);
+//                pairs[l].setY(100);
+//            }
+
+            pairs[l].setTextSize(20);
+            pairs[l].setGravity(Gravity.CENTER);
+            pairs[l].setId(l);
+            pairs[l].setBackground(getResources().getDrawable(R.drawable.circle));
+            pairs[l].setText(letterList.get(l).toString());
+            myLayout.addView(pairs[l]);
         }
+
     }
+
+//    private class ButtonClickListenerResetButton implements Button.OnClickListener {
+//
+//
+//        @Override
+//        public void onClick(View view) {
+//            setContentView(R.layout.httpget);
+//
+//            score = (TextView) findViewById(R.id.countPoints);
+//            timer = (TextView) findViewById(R.id.timer);
+//            countDownTimer = new MalibuCountDownTimer(startTime, interval);
+//            timer.setText(timer.getText() + String.valueOf(startTime));
+//            initHttpGetFrame();
+//            countDownTimer.start();
+//            numberOfLeters = 0;
+//
+//        }
+//    }
 
 
     // CountDownTimer class
@@ -269,29 +307,6 @@ public class MyActivity extends Activity {
         initApp();
     }
 
-    //TODO: class for the letter that need to be displayed graphical
-    public class WordsView extends View {
-
-        public WordsView(Context context) {
-            super(context);
-        }
-
-        @Override
-        protected void onDraw(Canvas canvas) {
-            super.onDraw(canvas);
-
-            Paint paint = new Paint();
-            paint.setColor(Color.GREEN);
-            paint.setStyle(Paint.Style.FILL);
-            canvas.drawPaint(paint);
-
-            paint.setColor(Color.RED);
-            paint.setTextSize(20);
-            canvas.drawText("AA", 10, 25, paint);
-        }
-
-    }
-
     private void initApp() {
         ButtonClickListenerStartButton buttonClickListener = new ButtonClickListenerStartButton();
         Button submitButton = (Button) findViewById(R.id.start_game);
@@ -315,8 +330,6 @@ public class MyActivity extends Activity {
         Button submitButton = (Button) findViewById(R.id.restartButton);
         submitButton.setOnClickListener(buttonClickListener);
     }
-
-
 
 
     private int calculateScore(String s) {

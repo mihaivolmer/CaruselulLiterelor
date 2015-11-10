@@ -5,6 +5,11 @@
               android:layout_height="fill_parent"
               android:weightSum="1">
 
+    <!-- Include letters xml-->
+
+    <include layout="@layout/letters"/>
+
+
     <!-- Word entered for search-->
     <TextView
             android:id="@+id/welcome_text"

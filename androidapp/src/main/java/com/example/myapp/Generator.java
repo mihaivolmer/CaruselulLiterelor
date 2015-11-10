@@ -1,7 +1,7 @@
 package com.example.myapp;
 
-import java.sql.Time;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -10,6 +10,10 @@ import java.util.Random;
 public class Generator {
     private class Face {
         private Character letter;
+
+        public Face() {
+
+        }
 
         public Character getLetter() {
             return letter;
@@ -26,6 +30,7 @@ public class Generator {
 
         public Dice() {
             this.random = new Random();
+            this.face = new Face();
         }
 
 
@@ -35,29 +40,37 @@ public class Generator {
 
             //pentru fiecare zar, in functie de value si id, setez caracterul fetei
             this.face.setLetter(Generator.diceFaces[id][value]);
+
         }
 
         //get the current face
-        public Face getFace(){
+        public Face getFace() {
             return this.face;
         }
 
     }
 
-    final public int DICES = 9;
+    private final int DICES = 9;
     private ArrayList<Dice> dices;
 
     public Generator() {
-        this.dices = new ArrayList<Dice>(DICES);
+        createDices();
     }
 
-    public void RollDices() {
+    private void createDices() {
+        this.dices = new ArrayList<Dice>(DICES);
+        for (int i = 0; i < DICES; i++) {
+            this.dices.add(new Dice());
+        }
+    }
+
+    private void RollDices() {
         for (Dice dice : this.dices) {
             dice.Roll(this.dices.indexOf(dice));
         }
     }
 
-    public ArrayList<Character> getFaces() {
+    private ArrayList<Character> getFaces() {
         ArrayList<Character> faces = new ArrayList<Character>();
 
         for (Dice dice : this.dices) {
@@ -67,7 +80,16 @@ public class Generator {
         return faces;
     }
 
-    public static Character[][] diceFaces = {
+    //function to roll the dice and get letters
+    public List getLetters() {
+        RollDices();
+        ArrayList<Character> diceFaces = getFaces();
+
+        return diceFaces;
+    }
+
+
+    private static final Character[][] diceFaces = {
             {'A', 'A', 'U', 'I', 'H', 'J'},
             {'T', 'R', 'N', 'S', 'M', 'B'},
             {'A', 'A', 'R', 'C', 'D', 'M'},

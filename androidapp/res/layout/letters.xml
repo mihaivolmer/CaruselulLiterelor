@@ -1,0 +1,30 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<RelativeLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content">-->
+
+        <!--<TextView-->
+                <!--android:id="@+id/letterId"-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="100dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:background="@drawable/circle"-->
+                <!--android:gravity="center"-->
+                <!--android:textColor="#FFFFFF"-->
+                <!--android:textSize="15dp"/>-->
+
+    <!--</RelativeLayout>-->
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/my_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:gravity="center"/>
+            <!--android:textColor="#FFFFFF"-->
+            <!--android:textSize="15dp"-->
+
+</merge>
