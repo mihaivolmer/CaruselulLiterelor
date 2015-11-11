@@ -1,8 +1,9 @@
-package com.example.myapp;
+package com.example.myapp.androidutils;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import com.example.myapp.R;
 
 /**
  * Created by madalinativlea on 05/11/15.
