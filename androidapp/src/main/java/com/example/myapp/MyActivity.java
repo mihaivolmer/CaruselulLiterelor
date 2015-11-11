@@ -8,122 +8,89 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class MyActivity extends Activity {
 
     public static final String DEXONLINE_BASE_ADDRESS = "https://dexonline.ro/definitie/";
     public static final String OUTPUT_MESSAGE_OK = " is OK";
     public static final String OUTPUT_MESSAGE_BAD = " is BAD";
+    private static final float START = 50;
 
     private TextView resultTextView;
     private TextView timer;
     private TextView score;
-    private final long startTime = 60000;
-    private final long interval = 1000;
-    private MalibuCountDownTimer countDownTimer;
     private int numberOfLeters = 0;
     private ArrayList<String> responseWords = new ArrayList<String>();
-    private boolean wordExistsInList = false;
+
+    //check if the response enteredWord is the same with the one searched => redirect to another enteredWord
+    //is not allowed
+    //PROBLEM: words written without diacritics are redirected to the right page
+    //but the redirect is good; the enteredWord exists
+    private void validateWord(String word, String outputMessage, String responseWord) {
+        boolean wordExistsInList = false;
+        if (responseWord.equals(word)) {
+
+            for (String s : responseWords) {
+                if (s.equals(responseWord)) {
+                    wordExistsInList = true;
+                }
+            }
+
+            if (!wordExistsInList) {
+                responseWords.add(responseWord);
+                Log.i("Word " + word, " is OK");
+                resultTextView.setText(outputMessage + OUTPUT_MESSAGE_OK);
+                numberOfLeters = numberOfLeters + calculateScore(responseWord);
+                score.setText(" Score: " + numberOfLeters);
+
+            } else {
+                resultTextView.setText("Please, try another enteredWord!");
+            }
+        } else {
+            resultTextView.setText(outputMessage + OUTPUT_MESSAGE_BAD);
+        }
+    }
 
     private class WordSearchThread extends Thread {
-        private final String word;
+        private final String enteredWord;
 
-        public WordSearchThread(String word) {
-            this.word = word;
+        public WordSearchThread(String enteredWord) {
+            this.enteredWord = enteredWord;
         }
 
-        //removes diacritics
-        public String convertWord(String str) {
-            String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
-            Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-            return pattern.matcher(nfdNormalizedString).replaceAll("");
-        }
 
-        //retrieves the word fromt the http response
-        public String getWord(String httpResponse) {
-            //parse html to get the word: the word is in the title if exists
-            Document document = Jsoup.parse(httpResponse);
-            String[] wordsRetrieved = document.title().split("\\s");
 
-            //word needs to be without diacritics
-            return convertWord(wordsRetrieved[0]);
-        }
+        private HttpResponse getHttpResponse() throws IOException {
+            String wordUrl = MyActivity.DEXONLINE_BASE_ADDRESS + enteredWord;
 
-        //get text from response, UTF-8 is needed for the words with diacritics
-        private String getHttpResponse(HttpResponse httpResponse) throws IOException {
+            //execute http get using http client
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(wordUrl);
+            return httpClient.execute(httpGet);
 
-            InputStream inputStream = httpResponse.getEntity().getContent();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-            StringBuilder str = new StringBuilder();
-            String line;
-
-            while ((line = bufferedReader.readLine()) != null) {
-                str.append(line);
-            }
-            inputStream.close();
-
-            return str.toString();
-        }
-
-        //check if the response word is the same with the one searched => redirect to another word
-        //is not allowed
-        //PROBLEM: words written without diacritics are redirected to the right page
-        //but the redirect is good; the word exists
-        private void printOutputMessage(String outputMessage, String responseWord) {
-            if (responseWord.equals(word)) {
-
-                for (String s : responseWords) {
-                    if (s.equals(responseWord)) {
-                        wordExistsInList = true;
-                    }
-                }
-
-                if (!wordExistsInList) {
-                    responseWords.add(responseWord);
-                    Log.i("Word " + word, " is OK");
-                    resultTextView.setText(outputMessage + OUTPUT_MESSAGE_OK);
-                    numberOfLeters = numberOfLeters + calculateScore(responseWord);
-                    score.setText(" Score: " + numberOfLeters);
-                    wordExistsInList = false;
-
-                } else {
-                    resultTextView.setText("Please, try another word!");
-                    wordExistsInList = false;
-                }
-            } else {
-                resultTextView.setText(outputMessage + OUTPUT_MESSAGE_BAD);
-                wordExistsInList = false;
-            }
         }
 
         @Override
         public void run() {
 
             try {
-                String wordUrl = DEXONLINE_BASE_ADDRESS + word;
 
                 //execute http get using http client
-                HttpClient httpClient = new DefaultHttpClient();
-                HttpGet httpGet = new HttpGet(wordUrl);
-                HttpResponse httpResponse = httpClient.execute(httpGet);
+                HttpResponse httpResponse = getHttpResponse();
 
                 //status got from get
                 StatusLine statusLine = httpResponse.getStatusLine();
@@ -131,24 +98,22 @@ public class MyActivity extends Activity {
 
                 //it statusCode is OK(200) means the get method retrieved content
                 if (statusCode == HttpStatus.SC_OK) {
-                    String responseBody = getHttpResponse(httpResponse);
-
-                    final String responseWord = getWord(responseBody);
-                    Log.i("Response word", word);
+                    final String responseWord = WordUtils.getWord(httpResponse);
+                    Log.i("Response word", responseWord);
 
                     //when updating the UI you need to do it from the main thread, that means
                     //you need to call runOnUiThread
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            String outputMessage = "Word " + word;
+                            String outputMessage = "Word " + enteredWord;
 
-                            printOutputMessage(outputMessage, responseWord);
+                            validateWord(enteredWord, outputMessage, responseWord);
                         }
                     });
 
                 } else {
-                    Log.i(word, " does NOT exist!");
+                    Log.i(enteredWord, " does NOT exist!");
                     //when updating the UI you need to do it from the main thread, that means
                     //you need to call runOnUiThread
                     runOnUiThread(new Runnable() {
@@ -179,7 +144,7 @@ public class MyActivity extends Activity {
                     InputMethodManager.HIDE_NOT_ALWAYS);
 
 
-            //call the thread to search the word
+            //call the thread to search the enteredWord
             new WordSearchThread(wordEntered.getText().toString()).start();
 
             //clear textField
@@ -200,7 +165,9 @@ public class MyActivity extends Activity {
             resultTextView = (TextView) findViewById(R.id.result_text);
             score = (TextView) findViewById(R.id.countPoints);
             timer = (TextView) findViewById(R.id.timer);
-            countDownTimer = new MalibuCountDownTimer(startTime, interval);
+            long startTime = 60000;
+            long interval = 1000;
+            MalibuCountDownTimer countDownTimer = new MalibuCountDownTimer(startTime, interval);
             timer.setText(timer.getText() + String.valueOf(startTime));
             initHttpGetFrame();
             countDownTimer.start();
@@ -221,6 +188,9 @@ public class MyActivity extends Activity {
         int listSize = letterList.size();
         TextView[] pairs=new TextView[listSize];
 
+
+        boolean arrivedToLimit = true;
+        boolean beginNextRow = false;
         for(int l = 0; l < listSize; l++)
         {
 
@@ -230,17 +200,32 @@ public class MyActivity extends Activity {
             pairs[l].setHeight(100);
 
             //set coordinates
+            if (l >= 1) {
 
-//            if (l >= 1) {
-//                pairs[l].setX(pairs[l - 1].getX() + 50);
-//
-//                if (pairs[l].getX() > 300) {
-//                    pairs[l].setY(pairs[l - 1].getY() + 20);
-//                }
-//            } else {
-//                pairs[l].setX(100);
-//                pairs[l].setY(100);
-//            }
+                if (pairs[l-1].getX() >= 250) {
+                    arrivedToLimit = false;
+
+                }
+
+                if (arrivedToLimit) {
+                    pairs[l].setX(pairs[l - 1].getX() + 50);
+                } else {
+                    if (!beginNextRow) {
+                        Log.i("=======getX:", String.valueOf(pairs[l].getX()));
+                        pairs[l].setX(-400);
+                        pairs[l].setY(150);
+                        beginNextRow = true;
+                    } else {
+                        pairs[l].setY(150);
+                        pairs[l].setX(pairs[l-1].getX() + 50);
+                    }
+                }
+            } else {
+                pairs[l].setX(START);
+            }
+
+            Log.i("getX:", String.valueOf(pairs[l].getX()));
+            Log.i("getY:", String.valueOf(pairs[l].getY()));
 
             pairs[l].setTextSize(20);
             pairs[l].setGravity(Gravity.CENTER);
