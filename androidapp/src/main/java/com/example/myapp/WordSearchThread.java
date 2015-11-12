@@ -39,7 +39,7 @@ public class WordSearchThread extends Thread {
             //it statusCode is OK(200) means the get method retrieved content
             if (statusCode == HttpStatus.SC_OK) {
                 final String responseWord = WordUtils.getWord(httpResponse);
-                Log.i("Response enteredWord", responseWord);
+                Log.i("Response word", responseWord);
                 mainActivity.updateUI(true, responseWord, enteredWord);
 
             } else {

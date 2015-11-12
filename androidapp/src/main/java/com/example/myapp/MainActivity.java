@@ -3,55 +3,41 @@ package com.example.myapp;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.myapp.androidutils.EnterWordButton;
 import com.example.myapp.androidutils.LetterGraphicSetup;
 import com.example.myapp.wordutils.Generator;
+import com.example.myapp.wordutils.WordUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends Activity {
     public static final String OUTPUT_MESSAGE_OK = " is OK";
-    public static final String OUTPUT_MESSAGE_BAD = " is BAD";
+    public static final String OUTPUT_MESSAGE_BAD = "Please, try another word!";
 
     private TextView resultTextView;
     private TextView timer;
     private TextView score;
     private int numberOfLeters = 0;
-    private ArrayList<String> responseWords = new ArrayList<String>();
 
     private List<Character> letterList;
 
     //check if the response enteredWord is the same with the one searched => redirect to another enteredWord
     //is not allowed
-    //PROBLEM: words written without diacritics are redirected to the right page
-    //but the redirect is good; the enteredWord exists
     public void validateWord(String word, String outputMessage, String responseWord) {
-        boolean wordExistsInList = false;
-        if (responseWord.equals(word)) {
+        boolean finalWordOk = WordUtils.isFinalWordOk(word, responseWord);
 
-            for (String s : responseWords) {
-                if (s.equals(responseWord)) {
-                    wordExistsInList = true;
-                }
-            }
-
-            if (!wordExistsInList) {
-                responseWords.add(responseWord);
-                Log.i("Word " + word, " is OK");
-                resultTextView.setText(outputMessage + OUTPUT_MESSAGE_OK);
-                numberOfLeters = numberOfLeters + calculateScore(responseWord);
-                score.setText(" Score: " + numberOfLeters);
-
-            } else {
-                resultTextView.setText("Please, try another word!");
-            }
+        if (finalWordOk) {
+//            responseWordsList.add(responseWord);
+//            Log.i("Word " + word, " is OK");
+            resultTextView.setText(outputMessage + OUTPUT_MESSAGE_OK);
+            numberOfLeters = numberOfLeters + calculateScore(responseWord);
+            score.setText(" Score: " + numberOfLeters);
         } else {
-            resultTextView.setText(outputMessage + OUTPUT_MESSAGE_BAD);
+            resultTextView.setText(OUTPUT_MESSAGE_BAD);
         }
     }
 
