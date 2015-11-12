@@ -12,7 +12,7 @@ import java.text.Normalizer;
 import java.util.regex.Pattern;
 
 /**
- * Created by lionel on 11.11.15.
+ * Created by Laura on 11.11.15.
  */
 public class WordUtils {
 

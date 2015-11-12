@@ -12,7 +12,7 @@ import com.example.myapp.WordSearchThread;
 import java.util.List;
 
 /**
- * Created by lionel on 11.11.15.
+ * Created by Laura on 11.11.15.
  */
 public class EnterWordButton implements View.OnClickListener {
     MainActivity mainActivity;
@@ -20,12 +20,19 @@ public class EnterWordButton implements View.OnClickListener {
         this.mainActivity = activity;
     }
 
+    //checks if the entered word uses only once each letter given
+    //EXAMPLE: H T M D E C X B L,  word BEBE is NOT ok because there is one B and one E
     private boolean isEnteredWordOk (String enteredWord) {
         List<Character> letters = mainActivity.getLetterList();
 
         for (int i = 0; i < enteredWord.length(); i++) {
-            if (!letters.contains(enteredWord.charAt(i))) {
+            //!!! CASE SENSITIVE
+            Character currentLetter = enteredWord.toUpperCase().charAt(i);
+            if (!letters.contains(currentLetter)) {
                 return false;
+            } else {
+                //remove letter from the list
+                letters.remove(currentLetter);
             }
         }
         return true;

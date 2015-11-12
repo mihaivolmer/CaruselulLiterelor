@@ -201,6 +201,6 @@ public class MainActivity extends Activity {
     }
 
     public List<Character> getLetterList() {
-        return letterList;
+        return new ArrayList<Character>(letterList);
     }
 }
