@@ -22,6 +22,9 @@ Caruselul Literelor a fost conceput ca o aplicatie Android mobile
 Scopul aplicatiei:
 
 Aplicatia isi propune implementarea unui joc interactiv in care utilizatorul trebuie sa gaseasca cat mai multe cuvinte, continand doar literele aflate pe ecran sub forma unor zaruri, intr-un interval dat de timp.
+Scorul se va calcula astfel: - daca utilizatorul a fosrmat cuvinte ce cuprind litere rare( X, Z, H, J), iar cuvantul este mai lung de 6 litere punctajul se va alcatui dupa formula numarulLitereCuvant + 3*numarulLitereRare
+                            - daca utilizatorul a fosrmat cuvinte ce cuprind litere rare( X, Z, H, J), iar cuvantul este mai scurt de 6 litere punctajul se va alcatui dupa formula numarulLitereCuvant + numarulLitereRare
+                            - altfel punctajul se va calcula ca fiind numarulLitereCuvant
 
 
 
