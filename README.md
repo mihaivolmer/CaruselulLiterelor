@@ -23,6 +23,10 @@ Caruselul Literelor a fost conceput ca o aplicatie Android mobile
 
 http://elf.cs.pub.ro/mps/wiki/proiect/proiect-1
 
+<b>Tehnologii folosite:</b>
+* Java
+* Android
+
 <b>Scopul aplicatiei:</b>
 
 Aplicatia isi propune implementarea unui joc interactiv in care utilizatorul trebuie sa gaseasca cat mai multe cuvinte, continand doar literele aflate pe ecran sub forma unor zaruri, intr-un interval dat de timp.
