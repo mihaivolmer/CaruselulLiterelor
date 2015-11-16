@@ -10,16 +10,6 @@
     <include layout="@layout/letters"/>
 
 
-    <!-- Word entered for search-->
-    <TextView
-            android:id="@+id/welcome_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Enter a word:"
-            android:layout_gravity="center_horizontal"
-            android:textColor="#ffd764"
-            android:padding="20dp"/>
-
     <EditText
             android:id="@+id/enter_word"
             android:layout_width="match_parent"

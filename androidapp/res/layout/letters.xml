@@ -3,7 +3,17 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/lettersList"
             android:layout_width="300dp"
-            android:layout_height="200dp"
+            android:layout_height="100dp"
             android:orientation="horizontal"/>
+
+    <!-- Word entered for search-->
+    <TextView
+            android:id="@+id/welcome_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter a word:"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#ffd764"
+            android:padding="20dp"/>
 
 </merge>
