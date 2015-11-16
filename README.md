@@ -1,17 +1,17 @@
 # CaruselulLiterelor
 Repository-ul pentru proiectul #1 (Caruselul Literelor) de la Management-ul Proiectelor Software
 
-Echipa:
+<b>Echipa:</b>
 
-Technical Writer
+<b>Technical Writer</b>
 * Dragomir Dragos, 341C5
 
-Developers:
+<b>Developers:</b>
 * Ionel Laura, 342C5
 * Gruia Iulia, 341C5
 * Volmer Mihai, 341C1
 
-Testers
+<b>Testers</b>
 * Popescu Teodor, 341C5
 * Andreea Bruma, 341C5
 
@@ -19,21 +19,22 @@ Testers
 
 Caruselul Literelor a fost conceput ca o aplicatie Android mobile
 
-Cerinta:
+<b>Cerinta:</b>
+
 http://elf.cs.pub.ro/mps/wiki/proiect/proiect-1
 
-Scopul aplicatiei:
+<b>Scopul aplicatiei:</b>
 
 Aplicatia isi propune implementarea unui joc interactiv in care utilizatorul trebuie sa gaseasca cat mai multe cuvinte, continand doar literele aflate pe ecran sub forma unor zaruri, intr-un interval dat de timp.
 
-Scorul se va calcula astfel: 
+<b>Scorul se va calcula astfel: </b>
 - daca utilizatorul a fosrmat cuvinte ce cuprind litere rare( X, Z, H, J), iar cuvantul este mai lung de 6 litere punctajul se va alcatui dupa formula numarulLitereCuvant + 3*numarulLitereRare
 - daca utilizatorul a fosrmat cuvinte ce cuprind litere rare( X, Z, H, J), iar cuvantul este mai scurt de 6 litere punctajul se va alcatui dupa formula numarulLitereCuvant + numarulLitereRare
 - altfel punctajul se va calcula ca fiind numarulLitereCuvant
 
 
 
-Pasi configurare mediu de dezvoltare (IntelliJ IDEA):
+<b>Pasi configurare mediu de dezvoltare (IntelliJ IDEA):</b>
 --clone de pe Git--
 
 1. Check out from Version Control -> GitHub -> Git Repository URL -> Clone -> Create project from existing sources 
@@ -52,7 +53,7 @@ Pasi configurare mediu de dezvoltare (IntelliJ IDEA):
 
 
 
-Modulele aplicatiei:
+<b>Modulele aplicatiei:</b>
 
 1. LetterGraphicSetup.java - foloseste un xml(letters.xml) pentru desenarea in interfara grafica a celor 9 zaruri ale jocului
 2. Generator.java - clasa in care se genereaza fetele celor 9 zaruri ale jocului
