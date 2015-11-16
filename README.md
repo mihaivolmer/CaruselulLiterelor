@@ -4,16 +4,17 @@ Repository-ul pentru proiectul #1 (Caruselul Literelor) de la Management-ul Proi
 <b>Echipa:</b>
 
 <b>Technical Writer</b>
-* Dragomir Dragos, 341C5
+* Dragomir Dragos, 341C5 https://ro.linkedin.com/in/dragosddragomir/en
+
 
 <b>Developers:</b>
-* Ionel Laura, 342C5
-* Gruia Iulia, 341C5
-* Volmer Mihai, 341C1
+* Ionel Laura, 342C5 https://ro.linkedin.com/in/laura-ionel-039ab3b4
+* Gruia Iulia Mihaela, 341C5 https://ro.linkedin.com/in/iulia-mihaela-gruia-343b1560/en
+* Volmer Mihai, 341C1 https://ro.linkedin.com/in/mihai-cristian-volmer-881824a7
 
 <b>Testers</b>
-* Popescu Teodor, 341C5
-* Andreea Bruma, 341C5
+* Popescu Teodor, 341C5 https://ro.linkedin.com/in/doru-popescu-8b4296102
+* Andreea Bruma, 341C5 https://ro.linkedin.com/in/andreea-brumă-45238610a/en
 
 
 
