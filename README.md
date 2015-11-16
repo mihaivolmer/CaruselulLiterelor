@@ -20,6 +20,7 @@ Testers
 Caruselul Literelor a fost conceput ca o aplicatie Android mobile
 
 Scopul aplicatiei:
+
 Aplicatia isi propune implementarea unui joc interactiv in care utilizatorul trebuie sa gaseasca cat mai multe cuvinte, continand doar literele aflate pe ecran sub forma unor zaruri, intr-un interval dat de timp.
 
 
