@@ -34,3 +34,19 @@ Pasi configurare mediu de dezvoltare (IntelliJ IDEA):
 5. AVD Manager -> Create Virtual Device 
 
 6. Edit Configuration -> + button -> Android Application -> Model: select your model -> Package : Deploy Default APK, Activity: Louch, Emulator: select your emulator
+
+
+
+
+Modulele aplicatiei:
+
+1. LetterGraphicSetup.java - foloseste un xml(letters.xml) pentru desenarea in interfara grafica a celor 9 zaruri ale jocului
+2. Generator.java - clasa in care se genereaza fetele celor 9 zaruri ale jocului
+                  - metoda getLetters() genereaza fete noi pentru fiecare zar si le intoarce sub forma de lista
+3. WordUtils.java - clasa contine metode ce implementeaza validarea si cautarea cuvantului
+4. EnterWordButton.java - clasa mapata intr-un xml(httpget.xml) pentru implementarea grafica a butonului
+5. Pop.java - clasa mapata intr-un xml(popwindow.xml) pentru rewprezentarea grafica a ferestrei FinishGame
+6. MainActivity.java - clasa principala care asigura atat partea de view cat si cea de control
+7. WordSearchThread.java - clasa ce cuprinde metode ce implementeaza cautarea cuvantului in dictionar
+                         - trimite off-main-thread un query catre dexonline.ro si, in functie de raspuns, afiseaza rezultatul pe ecran
+
