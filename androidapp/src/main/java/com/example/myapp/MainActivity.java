@@ -1,9 +1,11 @@
 package com.example.myapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.myapp.androidutils.EnterWordButton;
@@ -25,14 +27,27 @@ public class MainActivity extends Activity {
 
     private List<Character> letterList;
 
+
+    public void hideKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    private void showKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.showSoftInput(this.getCurrentFocus(), InputMethodManager.SHOW_IMPLICIT);
+    }
+
     //check if the response enteredWord is the same with the one searched => redirect to another enteredWord
     //is not allowed
     public void validateWord(String word, String outputMessage, String responseWord) {
         boolean finalWordOk = WordUtils.isFinalWordOk(word, responseWord);
 
         if (finalWordOk) {
-//            responseWordsList.add(responseWord);
-//            Log.i("Word " + word, " is OK");
             resultTextView.setText(outputMessage + OUTPUT_MESSAGE_OK);
             numberOfLeters = numberOfLeters + calculateScore(responseWord);
             score.setText(" Score: " + numberOfLeters);
@@ -55,26 +70,23 @@ public class MainActivity extends Activity {
                 }
             });
         } else {
-            //if the entered word is not composed from the given letters, the responseWord will be null
-            if (responseWord == null) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        resultTextView.setText("Use the given letters!");
-                    }
-                });
-            } else {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        resultTextView.setText("Not found!");
-                    }
-                });
-            }
-
-
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    resultTextView.setText("Not found!");
+                }
+            });
         }
+    }
 
+    //update UI before searching the word if first verification fails
+    public void updateUIFailFast(final String outputMessage) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                resultTextView.setText(outputMessage);
+            }
+        });
     }
 
     private class ButtonClickListenerStartButton implements Button.OnClickListener {
@@ -120,8 +132,6 @@ public class MainActivity extends Activity {
             TextView scoreView = (TextView) findViewById(R.id.scoreView);
             scoreView.setText("Score: " + numberOfLeters);
             initAppResetButton();
-
-
         }
 
         @Override
@@ -141,14 +151,18 @@ public class MainActivity extends Activity {
     }
 
     private void initApp() {
+        showKeyboard();
         ButtonClickListenerStartButton buttonClickListener = new ButtonClickListenerStartButton();
         Button submitButton = (Button) findViewById(R.id.start_game);
         submitButton.setOnClickListener(buttonClickListener);
+
+
     }
 
     private void initHttpGetFrame() {
         score.setText(" Score: " + numberOfLeters);
 
+        WordUtils.clearWordList();
         EnterWordButton enterWordButton = new EnterWordButton(this);
         Button submitButton = (Button) findViewById(R.id.submit_button);
         submitButton.setOnClickListener(enterWordButton);
@@ -163,7 +177,6 @@ public class MainActivity extends Activity {
         Button submitButton = (Button) findViewById(R.id.restartButton);
         submitButton.setOnClickListener(buttonClickListener);
     }
-
 
     private int calculateScore(String s) {
         int nr;

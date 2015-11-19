@@ -21,7 +21,7 @@ public class WordSearchThread extends Thread {
     private final MainActivity mainActivity;
 
     public WordSearchThread(String enteredWord, MainActivity mainActivity) {
-        this.enteredWord = enteredWord;
+        this.enteredWord = enteredWord.toUpperCase();
         this.mainActivity = mainActivity;
     }
 
@@ -38,13 +38,13 @@ public class WordSearchThread extends Thread {
 
             //it statusCode is OK(200) means the get method retrieved content
             if (statusCode == HttpStatus.SC_OK) {
-                final String responseWord = WordUtils.getWord(httpResponse);
+                final String responseWord = WordUtils.getWord(httpResponse, enteredWord);
                 Log.i("Response word", responseWord);
                 mainActivity.updateUI(true, responseWord, enteredWord);
 
             } else {
                 Log.i(enteredWord, " does NOT exist!");
-                mainActivity.updateUI(false, enteredWord, " does NOT exist!");
+                mainActivity.updateUI(false, null, enteredWord);
             }
         } catch (Exception httpException) {
             Log.i("Exception: ", httpException.getMessage());

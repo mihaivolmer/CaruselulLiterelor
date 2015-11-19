@@ -1,9 +1,7 @@
 package com.example.myapp.androidutils;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import com.example.myapp.MainActivity;
 import com.example.myapp.R;
@@ -26,14 +24,18 @@ public class EnterWordButton implements View.OnClickListener {
         EditText enteredWordEditText = (EditText) mainActivity.findViewById(R.id.enter_word);
 
         String enteredWordString = enteredWordEditText.getText().toString();
-
         Log.i("Word entered: ", enteredWordString);
-        // Close virtual keyboard
-        InputMethodManager inputManager = (InputMethodManager)
-                mainActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        inputManager.hideSoftInputFromWindow(mainActivity.getCurrentFocus().getWindowToken(),
-                InputMethodManager.HIDE_NOT_ALWAYS);
+//        //word must have minimum 4 letters
+        if (enteredWordString.length() < 4) {
+            mainActivity.updateUIFailFast("Minimum 4 letter required!");
+            mainActivity.hideKeyboard();
+            return;
+        }
+
+
+        // Close virtual keyboard
+        mainActivity.hideKeyboard();
 
         //check if word is composed from the given letters
         boolean wordOk = WordUtils.isEnteredWordOk(mainActivity.getLetterList(), enteredWordString);
@@ -41,7 +43,7 @@ public class EnterWordButton implements View.OnClickListener {
             //call the thread to search the word
             new WordSearchThread(enteredWordString, mainActivity).start();
         } else {
-            mainActivity.updateUI(false, null, enteredWordString);
+            mainActivity.updateUIFailFast("Use given letters!");
         }
         //clear textField
         enteredWordEditText.setText("");
