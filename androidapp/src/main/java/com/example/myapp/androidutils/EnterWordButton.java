@@ -26,7 +26,7 @@ public class EnterWordButton implements View.OnClickListener {
         String enteredWordString = enteredWordEditText.getText().toString();
         Log.i("Word entered: ", enteredWordString);
 
-//        //word must have minimum 4 letters
+//        //word must have minimum 4 letter_layout
         if (enteredWordString.length() < 4) {
             mainActivity.updateUIFailFast("Minimum 4 letter required!");
             mainActivity.hideKeyboard();
@@ -37,13 +37,13 @@ public class EnterWordButton implements View.OnClickListener {
         // Close virtual keyboard
         mainActivity.hideKeyboard();
 
-        //check if word is composed from the given letters
+        //check if word is composed from the given letter_layout
         boolean wordOk = WordUtils.isEnteredWordOk(mainActivity.getLetterList(), enteredWordString);
         if (wordOk) {
             //call the thread to search the word
             new WordSearchThread(enteredWordString, mainActivity).start();
         } else {
-            mainActivity.updateUIFailFast("Use given letters!");
+            mainActivity.updateUIFailFast("Use given letter_layout!");
         }
         //clear textField
         enteredWordEditText.setText("");

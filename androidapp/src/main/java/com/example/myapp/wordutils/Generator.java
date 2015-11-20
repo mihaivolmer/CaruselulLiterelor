@@ -80,7 +80,7 @@ public class Generator {
         return faces;
     }
 
-    //function to roll the dice and get letters
+    //function to roll the dice and get letter_layout
     public List getLetters() {
         RollDices();
         ArrayList<Character> diceFaces = getFaces();

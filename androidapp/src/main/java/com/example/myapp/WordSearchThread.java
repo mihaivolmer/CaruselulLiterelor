@@ -44,7 +44,8 @@ public class WordSearchThread extends Thread {
 
             } else {
                 Log.i(enteredWord, " does NOT exist!");
-                mainActivity.updateUI(false, null, enteredWord);
+                String outputMessage = enteredWord + " does NOT exist!";
+                mainActivity.updateUIFailFast(outputMessage);
             }
         } catch (Exception httpException) {
             Log.i("Exception: ", httpException.getMessage());

@@ -110,11 +110,10 @@ public class MainActivity extends Activity {
         }
     }
 
-    //creates LetterGraphicSetup object for generating the letters
+    //creates LetterGraphicSetup object for generating the letter_layout
     private void generateLetters() {
         letterList = new Generator().getLetters();
-        int listSize = letterList.size();
-        new LetterGraphicSetup(this, letterList, listSize);
+        new LetterGraphicSetup(this, letterList);
     }
 
     // CountDownTimer class

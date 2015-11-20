@@ -73,7 +73,7 @@ public class WordUtils {
             Character currentLetter = enteredWord.toUpperCase().charAt(i);
             Character letterWithoutDiacritics = convertWordNoDiacritics(String.valueOf(currentLetter)).charAt(0);
             if (!letters.contains(letterWithoutDiacritics)) {
-                Log.i("Uses given letters", "FALSE");
+                Log.i("Uses given letter_layout", "FALSE");
                 return false;
             } else {
                 //remove the letter without diacritics from the list
@@ -169,7 +169,7 @@ public class WordUtils {
             return enteredWord;
         }
 
-        return null;
+        return "";
     }
 
     //get text from response, UTF-8 is needed for the words with diacritics
