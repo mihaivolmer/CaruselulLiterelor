@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import com.example.myapp.R;
 
-/**
- * Created by madalinativlea on 05/11/15.
- */
 public class Pop extends Activity{
 
     @Override
