@@ -6,7 +6,7 @@ import android.util.DisplayMetrics;
 import com.example.myapp.R;
 
 /**
- * Created by madalinativlea on 05/11/15.
+ * Created by Iulia Gruia on 05.11.2015.
  */
 public class Pop extends Activity{
 
